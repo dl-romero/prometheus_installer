@@ -12,7 +12,13 @@ ExecStart=/usr/local/bin/prometheus \
 --storage.tsdb.path /var/lib/prometheus/ \
 --web.console.templates=/etc/prometheus/consoles \
 --web.console.libraries=/etc/prometheus/console_libraries \
+--web.config.file=/etc/prometheus/web.yml \
+--web.enable-lifecycle \
+--web.enable-admin-api \
 --storage.tsdb.retention.time=1y
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
